@@ -4,22 +4,26 @@ import { Link } from "react-router-dom";
 export default function AnimalList() {
   const [animals, setAnimals] = useState([]);
 
+  const loadAnimals = async () => {
+    const res = await fetch("http://localhost:3000/animals");
+    const data = await res.json();
+    setAnimals(data);
+  };
+
   useEffect(() => {
-    fetch("http://localhost:3000/animals")
-      .then(r => r.json())
-      .then(setAnimals)
-      .catch(err => console.error("Fetch error:", err));
+    loadAnimals();
   }, []);
 
   return (
     <div>
-      <h1>Eläimet</h1>
+      <h1>All Animals</h1>
       {animals.map(a => (
-        <div key={a.id} style={{ marginBottom: "1rem" }}>
+        <div key={a.id} style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem" }}>
           <h2>{a.name}</h2>
-          <p>{a.type} – {a.age}v</p>
-          <p>Status: {a.status}</p>
-          <Link to={`/animals/${a.id}`}>Katso tarkemmin</Link>
+          <p><strong>Type:</strong> {a.type}</p>
+          <p><strong>Age:</strong> {a.age} years</p>
+          <p><strong>Status:</strong> {a.status}</p>
+          <Link to={`/animals/${a.id}`}>View details</Link>
         </div>
       ))}
     </div>
