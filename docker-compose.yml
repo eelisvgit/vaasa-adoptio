@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: animals
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  server-a:
+    build:
+      context: ./server-a
+    environment:
+      DB_HOST: db
+    depends_on:
+      - db
+      - server-b
+    ports:
+      - "3000:3000"
+
+  server-b:
+    build:
+      context: ./server-b
+    environment:
+      DB_HOST: db
+    depends_on:
+      - db
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server-a
+    environment:
+      HOST: "0.0.0.0"
