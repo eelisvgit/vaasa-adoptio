@@ -18,8 +18,8 @@ CREATE TABLE adoptions (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO animals (name, type, age, breed, description, image_url, status)
+INSERT INTO animals (name, type, age, description, status)
 VALUES
-('Misu', 'kissa', 3, 'Eurooppalainen lyhytkarva', 'Kiltti sisäkissa', '', 'available'),
-('Rekku', 'koira', 5, 'Labradorinnoutaja', 'Energiaa täynnä', '', 'available'),
-('Pörrö', 'kissa', 2, 'Maine coon', 'Iso ja lempeä', '', 'available');
+('milo', 'dog', 3, 'friendly', 'available'),
+('luna', 'cat', 2, 'playful', 'available'),
+('rex', 'dog', 5, 'calm', 'available');

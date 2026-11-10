@@ -6,9 +6,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: animals
-    volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      POSTGRES_DB: vaasa-adoptio
     ports:
       - "5432:5432"
 

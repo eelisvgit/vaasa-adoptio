@@ -25,6 +25,23 @@ app.get("/animals", async (req, res) => {
     res.status(500).json({ error: "Database error" });
   }
 });
+// GET ONE ANIMAL BY ID
+app.get("/animals/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const result = await pool.query("SELECT * FROM animals WHERE id = $1", [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Animal not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
 
 // ADOPT AN ANIMAL
 app.put("/animals/:id/adopt", async (req, res) => {
